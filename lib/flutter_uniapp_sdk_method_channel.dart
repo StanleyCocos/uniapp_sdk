@@ -10,8 +10,33 @@ class MethodChannelFlutterUniappSdk extends FlutterUniappSdkPlatform {
   final methodChannel = const MethodChannel('flutter_uniapp_sdk');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
+  Future<bool> open(String id) async {
+    final result = await methodChannel.invokeMethod<bool>('open', id);
+    return result ?? false;
+  }
+
+  @override
+  Future<bool> install({
+    String id = '',
+    String path = '',
+    String password = '',
+  }) async {
+    final result = await methodChannel.invokeMethod<bool>('install', {
+      'id': id,
+      'path': path,
+      'password': password,
+    });
+    return result ?? false;
+  }
+
+  @override
+  Future<bool> preload(String id) async {
+    final result = await methodChannel.invokeMethod<bool>('preload', id);
+    return result ?? false;
+  }
+
+  @override
+  void close() {
+    methodChannel.invokeMethod<void>('close');
   }
 }

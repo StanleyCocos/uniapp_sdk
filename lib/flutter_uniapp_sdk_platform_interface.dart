@@ -23,7 +23,35 @@ abstract class FlutterUniappSdkPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  /// 启动应用
+  ///
+  /// [id] appId
+  Future<bool> open(String id) {
+    throw UnimplementedError('open() has not been implemented.');
+  }
+
+  /// 安装应用
+  ///
+  /// [id] appId
+  /// [path] 安装包路径
+  /// [password] 安装包密码
+  Future<bool> install({
+    String id = '',
+    String path = '',
+    String password = '',
+  }) {
+    throw UnimplementedError('install() has not been implemented.');
+  }
+
+  /// 预加载应用
+  ///
+  /// [id] appId
+  Future<bool> preload(String id){
+    throw UnimplementedError('preload() has not been implemented.');
+  }
+
+  /// 关闭应用
+  void close() {
+    throw UnimplementedError('close() has not been implemented.');
   }
 }
