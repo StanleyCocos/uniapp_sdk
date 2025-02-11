@@ -1,0 +1,28 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_uniapp_sdk (0.0.1):
+    - Flutter
+  - integration_test (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_uniapp_sdk (from `.symlinks/plugins/flutter_uniapp_sdk/ios`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_uniapp_sdk:
+    :path: ".symlinks/plugins/flutter_uniapp_sdk/ios"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_uniapp_sdk: 77286134118db7c24f0a78c469e7898b1f014b6e
+  integration_test: 2d03ab552da9a1f408709a6acf3d7ca4cb3cb307
+
+PODFILE CHECKSUM: 6e700dec67e6deac9b1c69bb14c49a2217a12d15
+
+COCOAPODS: 1.16.2
