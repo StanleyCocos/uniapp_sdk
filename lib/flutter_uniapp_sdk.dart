@@ -10,7 +10,11 @@ class FlutterUniappSdk {
     String path = '',
     String password = '',
   }) {
-    return FlutterUniappSdkPlatform.instance.install(id: id);
+    return FlutterUniappSdkPlatform.instance.install(
+      id: id,
+      path: path,
+      password: password,
+    );
   }
 
   Future<bool> preload(String id) {

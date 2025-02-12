@@ -11,7 +11,7 @@ class MethodChannelFlutterUniappSdk extends FlutterUniappSdkPlatform {
 
   @override
   Future<bool> open(String id) async {
-    final result = await methodChannel.invokeMethod<bool>('open', id);
+    final result = await methodChannel.invokeMethod<bool>('open', {'appId': id});
     return result ?? false;
   }
 
@@ -22,7 +22,7 @@ class MethodChannelFlutterUniappSdk extends FlutterUniappSdkPlatform {
     String password = '',
   }) async {
     final result = await methodChannel.invokeMethod<bool>('install', {
-      'id': id,
+      'appId': id,
       'path': path,
       'password': password,
     });
@@ -31,7 +31,7 @@ class MethodChannelFlutterUniappSdk extends FlutterUniappSdkPlatform {
 
   @override
   Future<bool> preload(String id) async {
-    final result = await methodChannel.invokeMethod<bool>('preload', id);
+    final result = await methodChannel.invokeMethod<bool>('preload', {'appId': id});
     return result ?? false;
   }
 
