@@ -61,7 +61,8 @@ public class DownloadUtil {
                 int len = 0;
                 FileOutputStream fos = null;
                 // 储存下载文件的目录
-                String savePath = isExistDir(saveDir);
+                //String savePath = isExistDir(saveDir);
+                String savePath = saveDir;
                 Log.w(TAG,"存储下载目录："+savePath);
                 try {
                     is = response.body().byteStream();

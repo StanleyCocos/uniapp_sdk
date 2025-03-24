@@ -98,7 +98,7 @@
         </service>
 
 
-        <activity
+<!--        <activity
             android:name="com.example.unimpdemo.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|mcc|mnc|fontScale"
             android:hardwareAccelerated="true"
@@ -108,7 +108,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>-->
 
         <activity android:name="com.example.unimpdemo.TestPageActivity"  android:exported="false" android:theme="@style/Theme.AppCompat"></activity>
 

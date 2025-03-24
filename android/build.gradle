@@ -74,7 +74,7 @@ android {
         //导入SDK相关依赖jar、aar
 //        compileOnly fileTree(include: ['*.jar'], dir: 'libs')
 //        compileOnly fileTree(include: ['*.aar'], dir: 'libs')
-        //implementation fileTree(include: ['*.jar'], dir: 'libs')
+        implementation fileTree(include: ['*.jar'], dir: 'libs')
         implementation fileTree(include: ['*.aar'], dir: 'libs')
 
         //implementation project(':uniapp_libs')

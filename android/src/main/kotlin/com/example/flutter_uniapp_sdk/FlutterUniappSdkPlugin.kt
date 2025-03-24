@@ -109,11 +109,11 @@ class FlutterUniappSdkPlugin: FlutterPlugin, MethodCallHandler {
     val wgtUrl = "https://native-res.dcloud.net.cn/unimp-sdk/__UNI__7AEA00D.wgt"
     val wgtName = "__UNI__7AEA00D.wgt"
 
-    val downFilePath: String? = context.getExternalCacheDir()?.getPath()
+    val downFilePath: String? = context.cacheDir.getPath()
 
     val uiHandler = Handler()
 
-
+    Log.d(TAG, "remoteOpen: $downFilePath")
     DownloadUtil.get()
       .download(context, wgtUrl, downFilePath, wgtName, object : DownloadUtil.OnDownloadListener {
         override fun onDownloadSuccess(file: File) {
@@ -135,11 +135,13 @@ class FlutterUniappSdkPlugin: FlutterPlugin, MethodCallHandler {
                     "__UNI__7AEA00D",
                     uniMPOpenConfiguration
                   )
+                  Log.d(TAG, "onDownloadSuccess: 释放成功")
                 } catch (e: java.lang.Exception) {
                   e.printStackTrace()
                 }
               } else {
                 //释放wgt失败
+                Log.e(TAG, "onDownloadSuccess: 释放失败")
               }
             }
           }
