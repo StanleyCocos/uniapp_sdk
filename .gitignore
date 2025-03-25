@@ -55,3 +55,6 @@ Thumbs.db
 # Xcode
 *.xccheckout
 *.xcodeproj
+
+# FVM Version Cache
+.fvm/

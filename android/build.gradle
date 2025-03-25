@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath 'com.android.tools.build:gradle:8.7.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -18,18 +18,22 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "$projectDir/repo"
+        }
     }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: "maven-publish"
 
 android {
     if (project.android.hasProperty("namespace")) {
         namespace 'com.example.flutter_uniapp_sdk'
     }
 
-    compileSdk 34
+    compileSdk 35
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -46,12 +50,47 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 24
+        targetSdkVersion 34
+        ndk {
+            abiFilters 'x86','armeabi-v7a',"arm64-v8a" //不支持armeabi
+        }
+    }
+
+    //此处配置必须添加 否则无法正确运行
+    aaptOptions {
+        additionalParameters '--auto-add-overlay'
+        //noCompress 'foo', 'bar'
+        ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
     }
 
     dependencies {
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.mockito:mockito-core:5.0.0'
+
+        //导入SDK相关依赖jar、aar, 改为本地 maven 方式引入
+        implementation 'com.uniapp:uniMPSDK-V2-release:1.0.0'
+        implementation 'com.uniapp:android-gif-drawable-1.2.28:1.0.0'
+        implementation 'com.uniapp:Bluetooth-release:1.0.0'
+        implementation 'com.uniapp:breakpad-build-release:1.0.0'
+        implementation 'com.uniapp:contacts-release:1.0.0'
+        implementation 'com.uniapp:fingerprint-release:1.0.0'
+        implementation 'com.uniapp:iBeacon-release:1.0.0'
+        implementation 'com.uniapp:messaging-release:1.0.0'
+        implementation 'com.uniapp:sqlite-release:1.0.0'
+        implementation 'com.uniapp:uniapp-v8-release:1.0.0'
+
+
+        implementation 'androidx.recyclerview:recyclerview:1.0.0' //必须集成，android 自带recyclerview支持
+        implementation 'androidx.legacy:legacy-support-v4:1.0.0' //必须集成，androidx support支持
+        implementation 'androidx.appcompat:appcompat:1.0.0' //必须集成，androidx appcompat支持
+        implementation 'com.alibaba:fastjson:1.2.83' //必须集成，fastjson功能需要
+        implementation 'com.facebook.fresco:fresco:2.5.0'//必须集成，图片加载需要
+        implementation 'com.facebook.fresco:animated-gif:2.5.0'//必须集成，图片加载需要
+        implementation 'com.github.bumptech.glide:glide:4.9.0'//必须集成，图片加载需要
+        implementation 'androidx.webkit:webkit:1.5.0' //4.45版本之后 必须集成，用来支持暗黑模式
+
+        implementation 'com.squareup.okhttp3:okhttp:3.7.0'
     }
 
     testOptions {
@@ -64,5 +103,52 @@ android {
                showStandardStreams = true
             }
         }
+    }
+}
+
+// 添加 Maven 发布配置
+afterEvaluate {
+    tasks.named('preBuild') {
+        dependsOn 'publish' // 在构建生命周期的最早阶段触发发布
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url = uri("$projectDir/repo") // 仓库路径，只需定义一次
+        }
+    }
+
+    // 遍历 libs 目录下所有 .aar 文件
+    fileTree(dir: "$projectDir/libs", include: '**/*.aar').each { aarFile ->
+        def artifactIdName = aarFile.name.replace('.aar', '')
+        println("Processing AAR: $artifactIdName")
+
+        // 动态创建唯一的发布名称
+        publications.create("${artifactIdName}", MavenPublication) {
+            groupId = 'com.uniapp'
+            artifactId = artifactIdName
+            version = '1.0.0'
+            artifact(aarFile) // 直接使用文件对象，无需拼接路径
+        }
+    }
+}
+
+// 为所有发布任务添加条件：仅当目标文件不存在时执行
+tasks.withType(PublishToMavenRepository).configureEach { task ->
+    task.onlyIf {
+        def publication = task.publication
+        def groupPath = publication.groupId.replace('.', '/')
+        def artifactId = publication.artifactId
+        def version = publication.version
+
+        // 检查仓库中是否已存在对应的 .aar 和 .pom 文件
+        def repoDir = project.file("$projectDir/repo")
+        def targetDir = new File(repoDir, "$groupPath/$artifactId/$version")
+        def aarFile = new File(targetDir, "${artifactId}-${version}.aar")
+        def pomFile = new File(targetDir, "${artifactId}-${version}.pom")
+        // 如果文件不存在，则执行任务
+        !(aarFile.exists() && pomFile.exists())
     }
 }
