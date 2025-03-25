@@ -2,6 +2,7 @@ package com.example.flutter_uniapp_sdk
 
 import android.content.Context
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import io.dcloud.feature.sdk.DCSDKInitConfig
 import io.dcloud.feature.sdk.DCUniMPSDK
@@ -59,12 +60,23 @@ class FlutterUniappSdkPlugin: FlutterPlugin, MethodCallHandler {
   }
 
   override fun onMethodCall(call: MethodCall, result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else if(call.method == "open") {
-      open(call, result)
-    } else {
-      result.notImplemented()
+    Log.d(TAG, "onMethodCall: ${call.method}")
+    when (call.method) {
+        "getPlatformVersion" -> {
+          result.success("Android ${android.os.Build.VERSION.RELEASE}")
+        }
+        "open" -> {
+          open(call, result)
+        }
+        "install" -> {
+          install(call, result)
+        }
+        "preload" -> {
+          preload(call, result)
+        }
+        else -> {
+          result.notImplemented()
+        }
     }
   }
 
@@ -72,87 +84,93 @@ class FlutterUniappSdkPlugin: FlutterPlugin, MethodCallHandler {
     channel.setMethodCallHandler(null)
   }
 
+  private fun install(call: MethodCall, result: Result){
+    val id: String = call.argument("appId") ?: ""
+    val path: String = call.argument("path") ?: ""
+    val password: String = call.argument("password") ?: ""
 
-  private fun open(call: MethodCall, result: Result) {
-    Log.d(TAG, "open: $result")
-    /*val uniMPReleaseConfiguration = UniMPReleaseConfiguration()
-    uniMPReleaseConfiguration.wgtPath = file.getPath()
-    uniMPReleaseConfiguration.password = "789456123222"
+    val uniMPReleaseConfiguration = UniMPReleaseConfiguration()
+    uniMPReleaseConfiguration.wgtPath = path
+    uniMPReleaseConfiguration.password = password
 
     DCUniMPSDK.getInstance().releaseWgtToRunPath(
-      "__UNI__A922B72_minimall", uniMPReleaseConfiguration
+      id, uniMPReleaseConfiguration
     ) { code, pArgs ->
       if (code == 1) {
         //释放wgt完成
-        try {
-          DCUniMPSDK.getInstance().openUniMP(this@MainActivity, "__UNI__A922B72_minimall")
-        } catch (e: Exception) {
-          e.printStackTrace()
-        }
+        result.success(true)
+        Log.d(TAG, "install: 释放wgt完成")
       } else {
         //释放wgt失败
+        result.error("error", "释放 wgt 失败: $code, $pArgs", pArgs)
+        Log.e(TAG, "install: 释放 wgt 失败: $code, $pArgs")
       }
-    }*/
-
-    remoteOpen()
-    /*try {
-      val unimp =
-        DCUniMPSDK.getInstance().openUniMP(context, "__UNI__B61D13B")
-    } catch (e: Exception) {
-      e.printStackTrace()
-    }*/
+    }
   }
 
-  private fun remoteOpen(){
+  private fun open(call: MethodCall, result: Result) {
+    val id: String = call.argument("appId") ?: ""
+    Log.d(TAG, "open: $id")
+    rawOpen(id, result)
+  }
 
-    //
-    val wgtUrl = "https://native-res.dcloud.net.cn/unimp-sdk/__UNI__7AEA00D.wgt"
-    val wgtName = "__UNI__7AEA00D.wgt"
-
+  private fun preload(call: MethodCall, result: Result) {
+   /* val id: String = call.argument("appId") ?: ""
+    val path: String = call.argument("path") ?: ""
+    val password: String = call.argument("password") ?: ""
     val downFilePath: String? = context.cacheDir.getPath()
-
-    val uiHandler = Handler()
-
-    Log.d(TAG, "remoteOpen: $downFilePath")
+    val uiHandler = Handler(context.mainLooper)
     DownloadUtil.get()
-      .download(context, wgtUrl, downFilePath, wgtName, object : DownloadUtil.OnDownloadListener {
+      .download(context, path, downFilePath, id, object : DownloadUtil.OnDownloadListener {
         override fun onDownloadSuccess(file: File) {
           val uniMPReleaseConfiguration = UniMPReleaseConfiguration()
           uniMPReleaseConfiguration.wgtPath = file.path
-          uniMPReleaseConfiguration.password = "789456123"
+          uniMPReleaseConfiguration.password = password
 
           uiHandler.post {
             DCUniMPSDK.getInstance().releaseWgtToRunPath(
-              "__UNI__7AEA00D", uniMPReleaseConfiguration
+              id, uniMPReleaseConfiguration
             ) { code, pArgs ->
               if (code == 1) {
                 //释放wgt完成
                 try {
                   val uniMPOpenConfiguration = UniMPOpenConfiguration()
-                  uniMPOpenConfiguration.extraData.put("darkmode", "auto")
+                  //uniMPOpenConfiguration.extraData.put("darkmode", "auto")
                   DCUniMPSDK.getInstance().openUniMP(
                     context,
-                    "__UNI__7AEA00D",
+                    id,
                     uniMPOpenConfiguration
                   )
-                  Log.d(TAG, "onDownloadSuccess: 释放成功")
+                  Log.d(TAG, "onDownloadSuccess: 释放 wgt 完成")
+                  result.success(true)
                 } catch (e: java.lang.Exception) {
                   e.printStackTrace()
                 }
               } else {
                 //释放wgt失败
-                Log.e(TAG, "onDownloadSuccess: 释放失败")
+                Log.e(TAG, "onDownloadSuccess: 释放 wgt 失败")
               }
             }
           }
         }
 
         override fun onDownloading(progress: Int) {
+          Log.d(TAG, "onDownloading: $progress")
         }
 
         override fun onDownloadFailed() {
-          Log.e("unimp", "downFilePath  ===  onDownloadFailed")
+          Log.e("unimp", "onDownloadFailed: 下载 uniapp wgt 失败")
         }
-      })
+      })*/
+  }
+
+  private fun rawOpen(id: String, result: Result? = null) {
+    try {
+      DCUniMPSDK.getInstance().openUniMP(context, id)
+      result?.success(true)
+    } catch (e: Exception) {
+      result?.error("error", e.message, null)
+      e.printStackTrace()
+    }
   }
 }
