@@ -14,9 +14,9 @@ flutter_uniapp_sdk:
 use_frameworks! :linkage => :static
 ```
 
-# Android Gradle 配置指南
+## Android Gradle 配置指南
 
-## 根目录配置
+### 根目录配置
 打开 `android/build.gradle` 文件，在 `repositories` 代码块中添加：
 
 ```groovy
@@ -31,7 +31,7 @@ allprojects {
 }
 ```
 
-## app目录配置
+### app目录配置
 打开 `android/app/build.gradle` 文件，在 `defaultConfig` 代码块中添加：
 
 ```groovy
