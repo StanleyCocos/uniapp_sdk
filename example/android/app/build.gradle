@@ -81,10 +81,4 @@ flutter {
 
 dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
-
-    /*if (project.plugins.hasPlugin("com.android.application")) {
-        print(rootDir.absolutePath + '/flutter_uniapp_sdk/libs')
-        //implementation fileTree(include: ["*.aar"], dir: rootDir.absolutePath + '/flutter_uniapp_sdk/libs')
-        implementation fileTree(include: ["*.aar"], dir: '/Users/11022/dev/flutter/github_fork/flutter_uniapp_sdk/android/libs')
-    }*/
 }
