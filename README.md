@@ -1,6 +1,12 @@
 # flutter_uniapp_sdk
 flutter uniapp sdk
 
+# 引入
+```
+flutter_uniapp_sdk:
+  git:
+    url: https://github.com/StanleyCocos/flutter_uniapp_sdk
+```
 
 # Android Gradle 配置指南
 
