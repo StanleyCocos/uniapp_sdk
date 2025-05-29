@@ -8,6 +8,12 @@ flutter_uniapp_sdk:
     url: https://github.com/StanleyCocos/flutter_uniapp_sdk
 ```
 
+## iOS
+打开'ios/Podfile'文件，在`target 'Runner' do` 代码块中添加: 
+```
+use_frameworks! :linkage => :static
+```
+
 # Android Gradle 配置指南
 
 ## 根目录配置
