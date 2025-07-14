@@ -1,6 +1,6 @@
-# flutter_uniapp_sdk_example
+# example
 
-Demonstrates how to use the flutter_uniapp_sdk plugin.
+A new Flutter project.
 
 ## Getting Started
 
