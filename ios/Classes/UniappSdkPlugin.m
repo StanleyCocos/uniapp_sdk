@@ -54,7 +54,7 @@
   NSError *error;
   if ([DCUniMPSDKEngine installUniMPResourceWithAppid:appId
                                      resourceFilePath:path
-                                             password:nil
+                                             password:password
                                                 error:&error]) {
       NSLog(@"小程序 %@ 应用资源文件部署成功，版本信息：%@",appId,[DCUniMPSDKEngine getUniMPVersionInfoWithAppid:appId]);
     result(@YES);

@@ -27,8 +27,11 @@ abstract class UniappSdkPlatform extends PlatformInterface {
     throw UnimplementedError('open() has not been implemented.');
   }
 
-  Future<bool> install(String id,
-      {String path = '', String password = ''}) async {
+  Future<bool> install(
+    String id, {
+    String path = '',
+    String? password,
+  }) async {
     throw UnimplementedError('install() has not been implemented.');
   }
 

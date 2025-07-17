@@ -16,8 +16,11 @@ class MethodChannelUniappSdk extends UniappSdkPlatform {
   }
 
   @override
-  Future<bool> install(String id,
-      {String path = '', String password = ''}) async {
+  Future<bool> install(
+    String id, {
+    String path = '',
+    String? password,
+  }) async {
     final result = await methodChannel.invokeMethod<bool>('install', {
       'id': id,
       'path': path,
