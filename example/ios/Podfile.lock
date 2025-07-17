@@ -1,0 +1,48 @@
+PODS:
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - SDWebImage (5.19.2):
+    - SDWebImage/Core (= 5.19.2)
+  - SDWebImage/Core (5.19.2)
+  - uniapp_sdk (0.0.1):
+    - Flutter
+    - unimp/Core
+  - unimp/Core (4.56):
+    - SDWebImage (= 5.19.2)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - uniapp_sdk (from `.symlinks/plugins/uniapp_sdk/ios`)
+
+SPEC REPOS:
+  trunk:
+    - SDWebImage
+    - unimp
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  uniapp_sdk:
+    :path: ".symlinks/plugins/uniapp_sdk/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  SDWebImage: dfe95b2466a9823cf9f0c6d01217c06550d7b29a
+  uniapp_sdk: ea88ea7b83039fe061bb23ab838850414b398ccd
+  unimp: 3851ba2103eb4a008387c278ced14573d27bac10
+
+PODFILE CHECKSUM: 6e700dec67e6deac9b1c69bb14c49a2217a12d15
+
+COCOAPODS: 1.16.2
