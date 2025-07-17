@@ -6,8 +6,17 @@
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [GeneratedPluginRegistrant registerWithRegistry:self];
-  // Override point for customization after application launch.
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+    BOOL result = [super application:application didFinishLaunchingWithOptions:launchOptions];
+    UIViewController *vc = self.window.rootViewController;
+    if(vc != nil){
+        NSLog(@"xxx");
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: vc];
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        self.window.rootViewController = nav;
+        [nav.navigationBar setHidden: YES];
+        [self.window makeKeyAndVisible];
+    }
+    return result;
 }
 
 @end

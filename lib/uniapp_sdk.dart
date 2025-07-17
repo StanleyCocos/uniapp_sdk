@@ -1,8 +1,11 @@
 import 'uniapp_sdk_platform_interface.dart';
-
+export 'uniapp_sdk_platform_interface.dart' show UniAppConfiguration, UniAPPOpenMode;
 class UniappSdk {
-  Future<bool> open(String id) async {
-    return UniappSdkPlatform.instance.open(id);
+  Future<bool> open(
+    String id, {
+    UniAppConfiguration? config,
+  }) async {
+    return UniappSdkPlatform.instance.open(id, config: config);
   }
 
   Future<bool> install(

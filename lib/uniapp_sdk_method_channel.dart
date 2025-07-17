@@ -10,8 +10,11 @@ class MethodChannelUniappSdk extends UniappSdkPlatform {
   final methodChannel = const MethodChannel('uniapp_sdk');
 
   @override
-  Future<bool> open(String id) async {
-    final result = await methodChannel.invokeMethod<bool>('open', {'id': id});
+  Future<bool> open(String id, {UniAppConfiguration? config}) async {
+    final result = await methodChannel.invokeMethod<bool>('open', {
+      'id': id,
+      'config': config?.toJson(),
+    });
     return result ?? false;
   }
 

@@ -3,6 +3,14 @@
 
 @implementation UniappSdkPlugin
 
+id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
+    id value = dict[key];
+    if (value == nil || [value isKindOfClass:[NSNull class]]) {
+        return defaultValue;
+    }
+    return value;
+}
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
   FlutterMethodChannel *channel =
       [FlutterMethodChannel methodChannelWithName:@"uniapp_sdk"
@@ -14,8 +22,6 @@
 
 - (void)handleMethodCall:(FlutterMethodCall *)call
                   result:(FlutterResult)result {
-    NSLog(@"name: %@", call.method);
-    NSLog(@"name: %@", call.arguments);
   if ([@"open" isEqualToString:call.method]) {
     [self open:call result:result];
   } else if ([@"install" isEqualToString:call.method]) {
@@ -30,10 +36,26 @@
 }
 
 - (void)open:(FlutterMethodCall *)call result:(FlutterResult)result {
-
   NSString *appId = call.arguments[@"id"];
+  NSDictionary *config = call.arguments[@"config"];
 
-  DCUniMPConfiguration *configuration = [[DCUniMPConfiguration alloc] init];
+    DCUniMPConfiguration *configuration = [[DCUniMPConfiguration alloc] init];
+    if(config != nil){
+        configuration.path = SafeValueForKey(config, @"path", nil);
+        configuration.extraData = SafeValueForKey(config, @"path", nil);
+        configuration.showAnimated = SafeValueForKey(config, @"showAnimated", @YES);
+        configuration.hideAnimated = SafeValueForKey(config, @"hideAnimated", @YES);
+        configuration.fromAppid = SafeValueForKey(config, @"fromAppid", nil);
+        configuration.enableBackground = SafeValueForKey(config, @"enableBackground", @NO);
+        configuration.enableGestureClose = SafeValueForKey(config, @"enableGestureClose", @NO);
+        NSString * mode = SafeValueForKey(config, @"openMode", @"present");
+        if([@"push" isEqualToString: mode]){
+            configuration.openMode = DCUniMPOpenModePush;
+        } else {
+            configuration.openMode = DCUniMPOpenModePresent;
+        }
+    }
+
   [DCUniMPSDKEngine openUniMP:appId
                 configuration:configuration
                     completed:^(DCUniMPInstance *_Nullable uniMPInstance,
@@ -56,10 +78,8 @@
                                      resourceFilePath:path
                                              password:password
                                                 error:&error]) {
-      NSLog(@"小程序 %@ 应用资源文件部署成功，版本信息：%@",appId,[DCUniMPSDKEngine getUniMPVersionInfoWithAppid:appId]);
     result(@YES);
   } else {
-      NSLog(@"小程序 %@ 应用资源部署失败： %@",appId,error);
     result(@NO);
   }
 }
@@ -82,7 +102,7 @@
 #pragma mark - App 生命周期
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSLog(@"application didFinishLaunchingWithOptions");
+  NSLog(@"application didFinishLaunchingWithOptions");
   [DCUniMPSDKEngine initSDKEnvironmentWithLaunchOptions:launchOptions];
   return YES;
 }
@@ -106,4 +126,8 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
   [DCUniMPSDKEngine destory];
 }
+
 @end
+
+
+

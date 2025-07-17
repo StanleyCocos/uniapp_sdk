@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -50,12 +49,24 @@ class _MyAppState extends State<MyApp> {
           children: [
             TextButton(
               onPressed: () async {
-                var result = await _uniappSdkPlugin.open(appId);
+                var result = await _uniappSdkPlugin.open(
+                  appId,
+                  config: UniAppConfiguration(
+                    extraData: {'key': 'value1'},
+                    fromAppId: 'fromAppId11',
+                    path: 'pages/component/view/view?a=1&b=2',
+                    openMode: UniAPPOpenMode.push,
+                    // 可选，默认是present
+                    showAnimated: true,
+                    hideAnimated: true,
+                    enableBackground: true,
+                    enableGestureClose: true,
+                  ),
+                );
                 print("open--> $result");
               },
               child: Text('启动'),
             ),
-
             TextButton(
               onPressed: () async {
                 String path = await copyAssetToRealPath();
@@ -64,7 +75,6 @@ class _MyAppState extends State<MyApp> {
               },
               child: Text('部署'),
             ),
-
             TextButton(
               onPressed: () async {
                 var result = await _uniappSdkPlugin.isExist(appId);
@@ -72,7 +82,6 @@ class _MyAppState extends State<MyApp> {
               },
               child: Text('是否存在'),
             ),
-
             TextButton(
               onPressed: () async {
                 var result = await _uniappSdkPlugin.getVersionInfo(appId);
