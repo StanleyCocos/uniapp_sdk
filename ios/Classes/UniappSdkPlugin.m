@@ -18,7 +18,6 @@ id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
-    NSLog(@"ddd");
   FlutterMethodChannel *channel =
       [FlutterMethodChannel methodChannelWithName:@"uniapp_sdk"
                                   binaryMessenger:[registrar messenger]];
@@ -142,6 +141,7 @@ id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
 # pragma mark - DCUniMPSDKEngineDelegate
 
 - (void)uniMPOnClose:(NSString *)appid {
+
     [self.channel invokeMethod:@"onClose" arguments:@{@"id": appid, @"type": @"1"}];
 }
 

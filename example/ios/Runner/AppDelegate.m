@@ -9,14 +9,12 @@
     BOOL result = [super application:application didFinishLaunchingWithOptions:launchOptions];
     UIViewController *vc = self.window.rootViewController;
     if(vc != nil){
-        NSLog(@"xxx");
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: vc];
         self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         self.window.rootViewController = nav;
-        [nav.navigationBar setHidden: YES];
+        [nav setNavigationBarHidden:YES animated:NO];
         [self.window makeKeyAndVisible];
     }
     return result;
 }
-
 @end
