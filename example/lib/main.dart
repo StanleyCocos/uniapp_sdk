@@ -64,6 +64,9 @@ class _MyAppState extends State<MyApp> {
                   ),
                   onClosed: (id){
                     print("onClosed--> $id ");
+                  },
+                  onReceive: (data){
+                    print("接收来自uniapp 的事件: $data ");
                   }
                 );
                 print("open--> $result");

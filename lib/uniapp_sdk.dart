@@ -8,11 +8,13 @@ class UniappSdk {
     String id, {
     UniAppConfiguration? config,
     void Function(String)? onClosed,
+    void Function(dynamic)? onReceive,
   }) async {
     return UniappSdkPlatform.instance.open(
       id,
       config: config,
       onClosed: onClosed,
+      onReceive: onReceive,
     );
   }
 
@@ -34,5 +36,15 @@ class UniappSdk {
 
   Future<dynamic> getVersionInfo(String id) async {
     return UniappSdkPlatform.instance.getVersionInfo(id);
+  }
+
+  Future<bool> sendEvent({
+    required String event,
+    Map<String, dynamic>? data,
+  }) async {
+    return UniappSdkPlatform.instance.sendEvent(
+      event: event,
+      data: data,
+    );
   }
 }

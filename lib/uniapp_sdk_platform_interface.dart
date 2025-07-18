@@ -27,6 +27,7 @@ abstract class UniappSdkPlatform extends PlatformInterface {
     String id, {
     UniAppConfiguration? config,
     void Function(String)? onClosed,
+    void Function(dynamic)? onReceive,
   }) async {
     throw UnimplementedError('open() has not been implemented.');
   }
@@ -45,6 +46,13 @@ abstract class UniappSdkPlatform extends PlatformInterface {
 
   Future<dynamic> getVersionInfo(String id) async {
     throw UnimplementedError('versionInfo() has not been implemented.');
+  }
+
+  Future<bool> sendEvent({
+    required String event,
+    Map<String, dynamic>? data,
+  }) async {
+    throw UnimplementedError('sendEvent() has not been implemented.');
   }
 }
 

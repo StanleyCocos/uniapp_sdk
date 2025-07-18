@@ -5,6 +5,8 @@
 
 @property(nonatomic, strong) FlutterMethodChannel *channel;
 
+@property(nonatomic, strong) DCUniMPInstance *instance;
+
 @end
 
 @implementation UniappSdkPlugin
@@ -38,6 +40,8 @@ id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
     [self getVersionInfo:call result:result];
   } else if ([@"isExist" isEqualToString:call.method]) {
     [self isExist:call result:result];
+  } else if ([@"sendEvent" isEqualToString:call.method]) {
+    [self sendEvent:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -70,6 +74,7 @@ id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
                 configuration:configuration
                     completed:^(DCUniMPInstance *_Nullable uniMPInstance,
                                 NSError *_Nullable error) {
+      self.instance = uniMPInstance;
                       if (uniMPInstance) {
                         result(@YES);
                       } else {
@@ -107,6 +112,13 @@ id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
   } else {
     result(@NO);
   }
+}
+
+
+- (void)sendEvent:(FlutterMethodCall *)call result:(FlutterResult)result {
+    NSString *event = call.arguments[@"event"];
+    NSString *data = call.arguments[@"data"];
+    [self.instance sendUniMPEvent:event data:data];
 }
 
 #pragma mark - App 生命周期
@@ -147,6 +159,11 @@ id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
 
 - (void)closeButtonClicked:(NSString *)appid {
     [self.channel invokeMethod:@"onClose" arguments:@{@"id": appid, @"type": @"2"}];
+}
+
+- (void)onUniMPEventReceive:(NSString *)event data:(id)data callback:(DCUniMPKeepAliveCallback)callback {
+    
+    [self.channel invokeMethod:@"onReceive" arguments:data];
 }
 @end
 
