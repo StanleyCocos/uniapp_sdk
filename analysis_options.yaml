@@ -2,3 +2,12 @@ include: package:flutter_lints/flutter.yaml
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
+linter:
+  rules:
+    # Uncomment to disable the `avoid_print` rule
+    # avoid_print: false
+    # Uncomment to enable the `prefer_single_quotes` rule
+    # prefer_single_quotes: true
+    require_trailing_commas: true
+    prefer_const_constructors: true

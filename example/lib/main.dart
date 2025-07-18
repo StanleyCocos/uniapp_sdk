@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     final path = directory.path;
 
     // 获取assets中的文件内容
-    final ByteData data = await rootBundle.load('assets/${appId}.wgt');
+    final ByteData data = await rootBundle.load('assets/$appId.wgt');
     final List<int> bytes = data.buffer.asUint8List();
 
     // 将文件写入到设备的文档目录中
@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
                 );
                 print("open--> $result");
               },
-              child: Text('启动'),
+              child: const Text('启动'),
             ),
             TextButton(
               onPressed: () async {
@@ -79,21 +79,21 @@ class _MyAppState extends State<MyApp> {
                 var result = await _uniappSdkPlugin.install(appId, path: path);
                 print("install--> $result");
               },
-              child: Text('部署'),
+              child: const Text('部署'),
             ),
             TextButton(
               onPressed: () async {
                 var result = await _uniappSdkPlugin.isExist(appId);
                 print("isExist--> $result");
               },
-              child: Text('是否存在'),
+              child: const Text('是否存在'),
             ),
             TextButton(
               onPressed: () async {
                 var result = await _uniappSdkPlugin.getVersionInfo(appId);
                 print("getVersionInfo--> $result");
               },
-              child: Text('获取当前版本信息'),
+              child: const Text('获取当前版本信息'),
             ),
           ],
         )),
