@@ -1,3 +1,5 @@
-## 0.0.1
+## 1.0.1
 
-* TODO: Describe initial release.
+- **FEAT**: add open config
+- **FEAT**: add onClosed callback
+- **FEAT**: add onReceive callback
