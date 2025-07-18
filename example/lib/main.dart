@@ -45,58 +45,60 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-            child: Column(
-          children: [
-            TextButton(
-              onPressed: () async {
-                var result = await _uniappSdkPlugin.open(
-                  appId,
-                  config: UniAppConfiguration(
-                    extraData: {'key': 'value1'},
-                    fromAppId: 'fromAppId11',
-                    path: 'pages/component/view/view?a=1&b=2',
-                    openMode: UniAPPOpenMode.push,
-                    // 可选，默认是present
-                    showAnimated: true,
-                    hideAnimated: true,
-                    enableBackground: true,
-                    enableGestureClose: true,
-                  ),
-                  onClosed: (id){
-                    print("onClosed--> $id ");
-                  },
-                  onReceive: (data){
-                    print("接收来自uniapp 的事件: $data ");
-                  }
-                );
-                print("open--> $result");
-              },
-              child: const Text('启动'),
-            ),
-            TextButton(
-              onPressed: () async {
-                String path = await copyAssetToRealPath();
-                var result = await _uniappSdkPlugin.install(appId, path: path);
-                print("install--> $result");
-              },
-              child: const Text('部署'),
-            ),
-            TextButton(
-              onPressed: () async {
-                var result = await _uniappSdkPlugin.isExist(appId);
-                print("isExist--> $result");
-              },
-              child: const Text('是否存在'),
-            ),
-            TextButton(
-              onPressed: () async {
-                var result = await _uniappSdkPlugin.getVersionInfo(appId);
-                print("getVersionInfo--> $result");
-              },
-              child: const Text('获取当前版本信息'),
-            ),
-          ],
-        )),
+          child: Column(
+            children: [
+              TextButton(
+                onPressed: () async {
+                  var result = await _uniappSdkPlugin.open(
+                    appId,
+                    config: UniAppConfiguration(
+                      extraData: {'key': 'value1'},
+                      fromAppId: 'fromAppId11',
+                      path: 'pages/component/view/view?a=1&b=2',
+                      openMode: UniAPPOpenMode.push,
+                      // 可选，默认是present
+                      showAnimated: true,
+                      hideAnimated: true,
+                      enableBackground: true,
+                      enableGestureClose: true,
+                    ),
+                    onClosed: (id) {
+                      print("onClosed--> $id ");
+                    },
+                    onReceive: (data) {
+                      print("接收来自uniapp 的事件: $data ");
+                    },
+                  );
+                  print("open--> $result");
+                },
+                child: const Text('启动'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  String path = await copyAssetToRealPath();
+                  var result =
+                      await _uniappSdkPlugin.install(appId, path: path);
+                  print("install--> $result");
+                },
+                child: const Text('部署'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  var result = await _uniappSdkPlugin.isExist(appId);
+                  print("isExist--> $result");
+                },
+                child: const Text('是否存在'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  var result = await _uniappSdkPlugin.getVersionInfo(appId);
+                  print("getVersionInfo--> $result");
+                },
+                child: const Text('获取当前版本信息'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
