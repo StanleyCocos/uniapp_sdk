@@ -1,6 +1,12 @@
 #import "DCUniMP.h"
 #import "UniappSdkPlugin.h"
 
+@interface UniappSdkPlugin () <UIApplicationDelegate, DCUniMPSDKEngineDelegate>
+
+@property(nonatomic, strong) FlutterMethodChannel *channel;
+
+@end
+
 @implementation UniappSdkPlugin
 
 id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
@@ -12,10 +18,13 @@ id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
+    NSLog(@"ddd");
   FlutterMethodChannel *channel =
       [FlutterMethodChannel methodChannelWithName:@"uniapp_sdk"
                                   binaryMessenger:[registrar messenger]];
   UniappSdkPlugin *instance = [[UniappSdkPlugin alloc] init];
+    instance.channel = channel;
+  [DCUniMPSDKEngine setDelegate:instance];
   [registrar addApplicationDelegate:instance];
   [registrar addMethodCallDelegate:instance channel:channel];
 }
@@ -34,6 +43,8 @@ id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
     result(FlutterMethodNotImplemented);
   }
 }
+
+# pragma mark uniapp 方法
 
 - (void)open:(FlutterMethodCall *)call result:(FlutterResult)result {
   NSString *appId = call.arguments[@"id"];
@@ -100,9 +111,9 @@ id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
 }
 
 #pragma mark - App 生命周期
+
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  NSLog(@"application didFinishLaunchingWithOptions");
   [DCUniMPSDKEngine initSDKEnvironmentWithLaunchOptions:launchOptions];
   return YES;
 }
@@ -127,6 +138,16 @@ id SafeValueForKey(NSDictionary *dict, NSString *key, id defaultValue) {
   [DCUniMPSDKEngine destory];
 }
 
+
+# pragma mark - DCUniMPSDKEngineDelegate
+
+- (void)uniMPOnClose:(NSString *)appid {
+    [self.channel invokeMethod:@"onClose" arguments:@{@"id": appid, @"type": @"1"}];
+}
+
+- (void)closeButtonClicked:(NSString *)appid {
+    [self.channel invokeMethod:@"onClose" arguments:@{@"id": appid, @"type": @"2"}];
+}
 @end
 
 

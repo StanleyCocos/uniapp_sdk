@@ -23,7 +23,11 @@ abstract class UniappSdkPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<bool> open(String id, {UniAppConfiguration? config}) async {
+  Future<bool> open(
+    String id, {
+    UniAppConfiguration? config,
+    void Function(String)? onClosed,
+  }) async {
     throw UnimplementedError('open() has not been implemented.');
   }
 

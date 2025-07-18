@@ -62,6 +62,9 @@ class _MyAppState extends State<MyApp> {
                     enableBackground: true,
                     enableGestureClose: true,
                   ),
+                  onClosed: (id){
+                    print("onClosed--> $id ");
+                  }
                 );
                 print("open--> $result");
               },

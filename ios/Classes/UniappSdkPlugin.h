@@ -1,5 +1,5 @@
 #import <Flutter/Flutter.h>
 
-@interface UniappSdkPlugin : NSObject<FlutterPlugin, UIApplicationDelegate>
+@interface UniappSdkPlugin : NSObject<FlutterPlugin>
 @end
 
