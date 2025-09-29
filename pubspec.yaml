@@ -1,5 +1,5 @@
 name: uniapp_sdk
-description: "A new Flutter plugin project."
+description: "UniApp SDK Flutter Plugin"
 version: 1.0.1
 homepage: https://github.com/StanleyCocos/uniapp_sdk
 
@@ -34,6 +34,9 @@ flutter:
   # adding or updating assets for this project.
   plugin:
     platforms:
+      android:
+        package: com.example.uniapp_sdk
+        pluginClass: UniappSdkPlugin
       ios:
         pluginClass: UniappSdkPlugin
 
