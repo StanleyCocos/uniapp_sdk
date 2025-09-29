@@ -1,3 +1,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.example.uniapp_sdk">
+  
+  <!-- UniApp SDK 所需权限 -->
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.RECORD_AUDIO" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <uses-permission android:name="android.permission.FLASHLIGHT" />
+  
+  <application>
+    <!-- UniApp SDK 配置 -->
+    <meta-data
+      android:name="dcloud_appkey"
+      android:value="your_app_key_here" />
+      
+    <!-- 文件提供者 -->
+    <provider
+      android:name="io.dcloud.common.util.DCloudFileProvider"
+      android:authorities="${applicationId}.dc.fileprovider"
+      android:exported="false"
+      android:grantUriPermissions="true">
+      <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/dcloud_file_provider" />
+    </provider>
+  </application>
 </manifest>

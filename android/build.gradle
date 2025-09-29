@@ -50,6 +50,16 @@ android {
     }
 
     dependencies {
+        implementation 'androidx.appcompat:appcompat:1.6.1'
+        implementation 'androidx.core:core-ktx:1.12.0'
+        
+        // UniApp SDK dependencies (uncomment when you have the actual SDK files)
+        // implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+        // implementation 'com.alibaba:fastjson:1.1.46.android'
+        // implementation 'com.facebook.fresco:fresco:2.0.0'
+        // implementation 'com.facebook.fresco:animated-gif:2.0.0'
+        // implementation 'com.github.bumptech.glide:glide:4.9.0'
+        
         testImplementation("org.jetbrains.kotlin:kotlin-test")
         testImplementation("org.mockito:mockito-core:5.0.0")
     }
