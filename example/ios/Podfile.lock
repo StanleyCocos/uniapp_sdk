@@ -11,7 +11,7 @@ PODS:
   - uniapp_sdk (0.0.1):
     - Flutter
     - unimp/Core
-  - unimp/Core (4.56):
+  - unimp/Core (4.75):
     - SDWebImage (= 5.19.2)
 
 DEPENDENCIES:
@@ -40,8 +40,8 @@ SPEC CHECKSUMS:
   integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   SDWebImage: dfe95b2466a9823cf9f0c6d01217c06550d7b29a
-  uniapp_sdk: ea88ea7b83039fe061bb23ab838850414b398ccd
-  unimp: 3851ba2103eb4a008387c278ced14573d27bac10
+  uniapp_sdk: 66c9531a941b9f0d45352adf659977e71af5c380
+  unimp: 46226cf37d43289daab4388ecb9d1cd75b55c9f1
 
 PODFILE CHECKSUM: 6e700dec67e6deac9b1c69bb14c49a2217a12d15
 
