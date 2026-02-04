@@ -19,6 +19,8 @@ A new Flutter plugin project.
   s.platform = :ios, '12.0'
 
   s.dependency 'unimp/Core'
+  s.dependency 'unimp/Camera&Gallery'
+  s.dependency 'unimp/File'
   s.static_framework = true
 
 
